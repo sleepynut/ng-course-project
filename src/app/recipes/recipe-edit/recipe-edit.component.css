@@ -1,0 +1,16 @@
+input[id^="iname"] {
+  width: 70%;
+}
+
+input[id^="iamount"] {
+  width: 20%;
+}
+
+#cancel {
+  width: 10%;
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 2px red solid;
+}

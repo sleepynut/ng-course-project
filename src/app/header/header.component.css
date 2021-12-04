@@ -1,0 +1,22 @@
+.navbar {
+  background: #2c3e50;
+}
+.navbar-nav li a {
+  color: black;
+}
+.navbar .container-fluid > a:hover,
+a:active,
+a:focus,
+.navbar .navbar-nav > li > a:hover,
+a:focus,
+a:active {
+  color: white;
+  background-color: #d6a5de;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+a {
+  cursor: pointer;
+}

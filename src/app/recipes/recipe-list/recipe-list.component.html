@@ -1,0 +1,11 @@
+<button class="btn btn-success" type="button" routerLink="new">
+  New Recipe
+</button>
+<hr />
+<div class="list-group">
+  <app-recipe-item
+    *ngFor="let r of recipes; let i = index"
+    [recipe]="r"
+    [index]="i"
+  ></app-recipe-item>
+</div>
