@@ -9,7 +9,7 @@ import {
   DeselectIngredient,
   EditIngredient,
 } from '../store/shopping-list.actions';
-import { State } from '../store/shopping-list.reducer';
+import * as fromApp from '../../store/app.reducer';
 import { ShoppingListService } from '../shopping-list.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   constructor(
     // private sls: ShoppingListService,
-    private store: Store<{ shoppingList: State }>
+    private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
