@@ -12,6 +12,8 @@ import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 import * as fromApp from './store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, PageNotFoundComponent],
@@ -24,6 +26,8 @@ import * as fromApp from './store/app.reducer';
     // ShoppingListModule,
     SharedModule,
     StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([AuthEffects]),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

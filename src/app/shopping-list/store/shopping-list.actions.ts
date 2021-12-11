@@ -2,12 +2,12 @@ import { Action } from '@ngrx/store';
 import { Ingredient } from '../../shared/ingredient.model';
 
 export enum ShoppingListActionTypes {
-  ADD_INGREDIENT = 'ADD_INGREDIENT',
-  ADD_INGREDIENTS = 'ADD_INGREDIENTS',
-  EDIT_INGREDIENT = 'EDIT_INGREDIENT',
-  DELETE_INGREDIENT = 'DELETE_INGREDIENT',
-  SELECT_INGREDIENT = 'SELECT_INGREDIENT',
-  DESELECT_INGREDIENT = 'DESELECT_INGREDIENT',
+  ADD_INGREDIENT = '[Shopping List] ADD_INGREDIENT',
+  ADD_INGREDIENTS = '[Shopping List] ADD_INGREDIENTS',
+  EDIT_INGREDIENT = '[Shopping List] EDIT_INGREDIENT',
+  DELETE_INGREDIENT = '[Shopping List]  DELETE_INGREDIENT',
+  SELECT_INGREDIENT = '[Shopping List]  SELECT_INGREDIENT',
+  DESELECT_INGREDIENT = '[Shopping List]  DESELECT_INGREDIENT',
 }
 
 export class AddIngredient implements Action {

@@ -6,6 +6,9 @@ import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
 import { environment } from 'src/environments/environment';
+import * as fromApp from '../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { Login, Logout } from './store/auth.actions';
 
 export interface AuthResponseData {
   idToken: string;
@@ -20,10 +23,14 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  // user = new BehaviorSubject<User>(null);
   timeoutCB: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromApp.AppState>
+  ) {}
 
   signup(email: string, password: string) {
     return this.http
@@ -88,8 +95,8 @@ export class AuthService {
       userData._token,
       new Date(userData._tokenExpDate)
     );
-    this.user.next(loadedUser);
-    // console.log(loadedUser);
+    // this.user.next(loadedUser);
+    this.store.dispatch(new Login(loadedUser));
 
     if (loadedUser.token) {
       this.autoLogout(loadedUser.tokenExpDate.getTime() - new Date().getTime());
@@ -100,7 +107,9 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
+    // this.user.next(null);
+    this.store.dispatch(new Logout());
+
     localStorage.removeItem('userData');
     clearTimeout(this.timeoutCB);
     this.router.navigate(['/auth']);
@@ -145,7 +154,8 @@ export class AuthService {
 
     console.log('user!!');
     console.log(u);
-    this.user.next(u);
+    // this.user.next(u);
+    this.store.dispatch(new Login(u));
 
     localStorage.setItem('userData', JSON.stringify(u));
     this.autoLogout(expiresIn * 1000);
