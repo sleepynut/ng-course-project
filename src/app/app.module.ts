@@ -8,12 +8,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AppRoutingModule } from './app-routing.module';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
-// import { RecipesModule } from './recipes/recipes.module';
-
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './auth/auth.module';
 import { StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, PageNotFoundComponent],
@@ -25,7 +22,7 @@ import { StoreModule } from '@ngrx/store';
     // AuthModule,
     // ShoppingListModule,
     SharedModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ shoppingList: shoppingListReducer }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css", 
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -101,5 +101,8 @@
       }
     }
   },
-  "defaultProject": "course-project"
+  "defaultProject": "course-project",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
