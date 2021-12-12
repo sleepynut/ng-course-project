@@ -96,7 +96,7 @@ export class AuthService {
       new Date(userData._tokenExpDate)
     );
     // this.user.next(loadedUser);
-    this.store.dispatch(new Login(loadedUser));
+    // this.store.dispatch(new Login(loadedUser));
 
     if (loadedUser.token) {
       this.autoLogout(loadedUser.tokenExpDate.getTime() - new Date().getTime());

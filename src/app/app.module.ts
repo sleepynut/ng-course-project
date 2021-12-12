@@ -26,8 +26,7 @@ import { AuthEffects } from './auth/store/auth.effects';
     // ShoppingListModule,
     SharedModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([]),
-    EffectsModule.forFeature([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects]),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
