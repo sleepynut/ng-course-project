@@ -14,7 +14,7 @@ import { AuthResponseData, AuthService } from './auth.service';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import * as fromApp from '../store/app.reducer';
-import { LoginStart } from './store/auth.actions';
+import { ClearError, LoginStart, SignupStart } from './store/auth.actions';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -68,7 +68,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       // authObs = this.as.login(email, password);
       this.store.dispatch(new LoginStart({ email, password }));
     } else {
-      authObs = this.as.signup(email, password);
+      // authObs = this.as.signup(email, password);
+      this.store.dispatch(new SignupStart({ email, password }));
     }
 
     // authObs.subscribe(
@@ -92,7 +93,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onHandleError() {
-    this.error = null;
+    // this.error = null;
+    this.store.dispatch(new ClearError());
   }
 
   private showErrorAlert(message: string) {

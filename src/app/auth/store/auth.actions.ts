@@ -7,11 +7,15 @@ export enum AuthActionTypes {
   AuthAuthsSuccess = '[Auth] Auth Auths Success',
   AuthAuthsFailure = '[Auth] Auth Auths Failure',
 
-  LOGIN = '[Auth] Login',
-  LOGOUT = '[Auth] Logout',
   LOGIN_START = '[Auth] Login start',
+  AUTH_SUCCESS = '[Auth] Authenticate success',
+  AUTH_FAIL = '[Auth] Authenticate fail',
+  LOGOUT = '[Auth] Logout',
   // LOGIN_SUCCESS = '[Auth] Login success',
-  LOGIN_FAIL = '[Auth] Login fail',
+  SIGNUP_START = '[Auth] Signup start',
+  CLEAR_ERROR = '[Auth] Clear error',
+  AUTO_LOGIN = '[Auth] Auto Login',
+  AUTO_LOGOUT = '[Auth] Auto Logout',
 }
 
 export class AuthAuths implements Action {
@@ -28,8 +32,8 @@ export class AuthAuthsFailure implements Action {
   constructor(public payload: { error: any }) {}
 }
 
-export class Login implements Action {
-  readonly type = AuthActionTypes.LOGIN;
+export class AuthSuccess implements Action {
+  readonly type = AuthActionTypes.AUTH_SUCCESS;
   constructor(public payload: User) {}
 }
 
@@ -43,15 +47,40 @@ export class LoginStart implements Action {
   constructor(public payload: { email: string; password: string }) {}
 }
 
-export class LoginFail implements Action {
-  readonly type = AuthActionTypes.LOGIN_FAIL;
+export class AuthFail implements Action {
+  readonly type = AuthActionTypes.AUTH_FAIL;
   constructor(public payload: string) {}
 }
+
+export class SignupStart implements Action {
+  readonly type = AuthActionTypes.SIGNUP_START;
+  constructor(public payload: { email: string; password: string }) {}
+}
+
+export class ClearError implements Action {
+  readonly type = AuthActionTypes.CLEAR_ERROR;
+  constructor() {}
+}
+
+export class AutoLogin implements Action {
+  readonly type = AuthActionTypes.AUTO_LOGIN;
+  constructor() {}
+}
+
+export class AutoLogout implements Action {
+  readonly type = AuthActionTypes.AUTO_LOGOUT;
+  constructor(public payload: number) {}
+}
+
 export type AuthActions =
   | AuthAuths
   | AuthAuthsSuccess
   | AuthAuthsFailure
-  | Login
+  | AuthSuccess
   | Logout
   | LoginStart
-  | LoginFail;
+  | AuthFail
+  | SignupStart
+  | ClearError
+  | AutoLogout
+  | AutoLogin;
