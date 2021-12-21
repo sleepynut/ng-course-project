@@ -78,8 +78,9 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   authSuccess = this.actions$.pipe(
     ofType(AuthActionTypes.AUTH_SUCCESS),
-    tap(() => {
-      this.router.navigate(['/recipes']);
+    tap((actionData: AuthSuccess) => {
+      console.log('redirect: ' + actionData.payload.redirect);
+      if (actionData.payload.redirect) this.router.navigate(['/recipes']);
     })
   );
 
@@ -106,13 +107,15 @@ export class AuthEffects {
 
       if (!userData) return { type: 'DUMMY' };
 
+      // console.log('here');
+
       let loadedUser: User = new User(
         userData.email,
         userData.id,
         userData._token,
         new Date(userData._tokenExpDate)
       );
-      return new AuthSuccess(loadedUser);
+      return new AuthSuccess({ user: loadedUser, redirect: false });
     })
   );
 
@@ -157,7 +160,7 @@ export class AuthEffects {
       new AutoLogout(u.tokenExpDate.getTime() - new Date().getTime())
     );
 
-    return new AuthSuccess(u);
+    return new AuthSuccess({ user: u, redirect: true });
   }
 
   private handleError(err: any): Observable<AuthActions> {

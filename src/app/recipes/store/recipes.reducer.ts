@@ -20,9 +20,36 @@ export function recipeReducer(
     case RecipesActionTypes.SET_RECIPES:
       return {
         ...state,
-        recipes: [...action.payload],
+        recipes: action.payload ? [...action.payload] : [],
+      };
+    case RecipesActionTypes.ADD_RECIPE:
+      console.log('Recipe: ' + JSON.stringify(action.payload));
+      return {
+        ...state,
+        recipes: [...state.recipes, action.payload],
+      };
+    case RecipesActionTypes.UPDATE_RECIPE:
+      const newRecipes = [...state.recipes];
+      newRecipes[action.payload.index] = action.payload.newRecipe;
+      return {
+        ...state,
+        recipes: newRecipes,
+      };
+    case RecipesActionTypes.DELETE_RECIPE:
+      // console.log('deleted');
+      // console.log('payload: ' + action.payload);
+      // console.log(
+      //   'recipes: ' +
+      //     JSON.stringify(
+      //       state.recipes.filter((_, index) => index != action.payload)
+      //     )
+      // );
+      return {
+        ...state,
+        recipes: state.recipes.filter((_, index) => index != action.payload),
       };
     default:
+      // console.log('Recipe: ' + JSON.stringify(action));
       return state;
   }
 }

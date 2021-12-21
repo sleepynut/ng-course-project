@@ -3,10 +3,6 @@ import { User } from '../user.model';
 // import { User } from '../user.model';
 
 export enum AuthActionTypes {
-  AuthAuths = '[Auth] Auth Auths',
-  AuthAuthsSuccess = '[Auth] Auth Auths Success',
-  AuthAuthsFailure = '[Auth] Auth Auths Failure',
-
   LOGIN_START = '[Auth] Login start',
   AUTH_SUCCESS = '[Auth] Authenticate success',
   AUTH_FAIL = '[Auth] Authenticate fail',
@@ -18,23 +14,9 @@ export enum AuthActionTypes {
   AUTO_LOGOUT = '[Auth] Auto Logout',
 }
 
-export class AuthAuths implements Action {
-  readonly type = AuthActionTypes.AuthAuths;
-}
-
-export class AuthAuthsSuccess implements Action {
-  readonly type = AuthActionTypes.AuthAuthsSuccess;
-  constructor(public payload: { data: any }) {}
-}
-
-export class AuthAuthsFailure implements Action {
-  readonly type = AuthActionTypes.AuthAuthsFailure;
-  constructor(public payload: { error: any }) {}
-}
-
 export class AuthSuccess implements Action {
   readonly type = AuthActionTypes.AUTH_SUCCESS;
-  constructor(public payload: User) {}
+  constructor(public payload: { user: User; redirect: boolean }) {}
 }
 
 export class Logout implements Action {
@@ -73,9 +55,6 @@ export class AutoLogout implements Action {
 }
 
 export type AuthActions =
-  | AuthAuths
-  | AuthAuthsSuccess
-  | AuthAuthsFailure
   | AuthSuccess
   | Logout
   | LoginStart

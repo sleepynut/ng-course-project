@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,16 +9,19 @@ import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import * as fromApp from '../../store/app.reducer';
 import { map } from 'rxjs/operators';
+import { AddRecipe, UpdateRecipe } from '../store/recipes.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css'],
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
   id: number;
 
   recipeForm: FormGroup;
+  private storeSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +38,10 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.storeSub) this.storeSub.unsubscribe();
+  }
+
   initForm() {
     let name: string;
     let path: string;
@@ -44,7 +51,7 @@ export class RecipeEditComponent implements OnInit {
     if (!isNaN(this.id)) {
       // let recipe: Recipe = this.rs.getRecipe(this.id);
 
-      this.store
+      this.storeSub = this.store
         .select('recipes')
         .pipe(map((state) => state.recipes[this.id]))
         .subscribe((recipe) => {
@@ -76,6 +83,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('id: ' + this.id);
     if (isNaN(this.id)) this.addRecipe();
     else this.updateRecipe();
 
@@ -108,10 +116,15 @@ export class RecipeEditComponent implements OnInit {
   }
 
   addRecipe() {
-    this.rs.addRecipe(this.recipeForm.value);
+    // this.rs.addRecipe(this.recipeForm.value);
+    console.log('Form value: ' + JSON.stringify(this.recipeForm.value));
+    this.store.dispatch(new AddRecipe(this.recipeForm.value));
   }
 
   updateRecipe() {
-    this.rs.updateRecipe(this.id, this.recipeForm.value);
+    // this.rs.updateRecipe(this.id, this.recipeForm.value);
+    this.store.dispatch(
+      new UpdateRecipe({ index: this.id, newRecipe: this.recipeForm.value })
+    );
   }
 }
